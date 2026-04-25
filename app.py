@@ -1,13 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3
 import random
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 
 def init_db():
-    conn = sqlite3.connect('quiz.db')
+    # Автоматическое определение пути к файлу базы в папке проекта
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    db_path = os.path.join(basedir, 'quiz.db')
+
+    conn = sqlite3.connect(db_path)
+
     c = conn.cursor()
 
     # Проверяем столбцы
